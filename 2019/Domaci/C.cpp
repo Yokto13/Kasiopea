@@ -8,20 +8,40 @@ using namespace std;
 
 signed main()
 {
-	int t, n, x;
+	int t, n, x, c, b, bi;
 	cin >> t;
 	for(int i = 0; i < t; ++i)
 	{
 		cin >> n;
 		vi stones(n+1, 10000000);
 		stones[0] = 0;
+		c = 0;
 		for(int j = 0; j < n; ++j)
 		{
-			cin >> x;
-			for(int k = j+1; k <= min(j + x, n); ++k)
-				stones[k] = min(stones[k], stones[j] + 1);
+			cin >> stones[j];
 		}
-		cout << stones[n] << endl;
+		for(int j = 0; j <= n;)
+		{
+			b = 0;
+			bi = -1;
+			int k = j + 1;
+			for(; k <= min(stones[j] + j, n); k++)
+			{
+				if(stones[k] + k - j - 1 > b)
+				{
+				//	cout << k+1 << endl;
+					b = stones[k] + k - j - 1;
+					bi = k;
+				}
+			}
+			//cout << "------------\n";
+			c++;
+			j = bi;
+			if(j + stones[j] >= n)
+				break;
+		}
+		cout << c + 1 << endl;
+		//cout << "************\n";
 	}
   return 0;
 }
